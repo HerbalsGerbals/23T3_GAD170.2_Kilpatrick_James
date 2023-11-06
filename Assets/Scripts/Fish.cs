@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,26 +10,50 @@ public class Fish : MonoBehaviour
     private string fishSpecies;
     private int dollarValue;
     private float fishLength;
-    public string[] inventory = new string[5] {"Sea Bass", "Horse Mackerel", "Red Snapper", "Barred Knifejaw", "Shark"};
-public string GetFish()
+    public string[] inventory = new string[5] { "Sea Bass", "Horse Mackerel", "Red Snapper", "Barred Knifejaw", "Shark" };
+    public int minInt = 5;
+    public int maxInt = 50;
+    public float minFloat = 5;
+    public float maxFloat = 50;
+    public Aquarium aquarium;
+    public float cloneLength;
+    public bool fishEaten;
+    
+    public string GetFish()
     {
         return fishSpecies;
+    }
+
+    public int GetValue()
+    {
+        return dollarValue;
+    }
+
+    public float GetLength()
+    {
+       
+        return fishLength;
         
     }
-    public void SetIntialStats(string newFish, int newValue,  float newLength)
+    public void SetIntialStats(string[] newFish, int newValue, float newLength)
     {
-        fishSpecies = newFish;
+        fishSpecies = newFish[Random.Range(0,newFish.Length)];
         dollarValue = newValue;
         fishLength = newLength;
+        
     }
-    public string GetFishType()
+     public void FishEaten()
     {
-        return fishSpecies;
+        if(aquarium !=null)
+        {
+            aquarium.RemoveFish(this);
+        }
+        Destroy(gameObject);
     }
     public void Start()
     {
-        Debug.Log("The fish is " + inventory[Random.Range(0, inventory.Length)]);
-        GetFish();
-        SetIntialStats("Fish", 3, 4);
+        SetIntialStats(inventory = new string[5] { "Sea Bass", "Horse Mackerel", "Red Snapper", "Barred Knifejaw", "Shark" }, Random.Range(minInt, maxInt), Random.Range(minFloat, maxFloat));
+
     }
+
 }
